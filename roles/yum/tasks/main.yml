@@ -4,3 +4,10 @@
     name: '*'
     state: latest
 
+- name: create cron
+  template:
+    src: update-yum.cron.j2
+    dest: /etc/cron.d/update-yum
+    owner: root
+    group: root
+    mode: 0644
