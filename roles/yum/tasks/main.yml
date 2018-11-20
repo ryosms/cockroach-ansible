@@ -1,0 +1,6 @@
+---
+- name: upadte yum
+  yum:
+    name: '*'
+    state: latest
+
