@@ -1,0 +1,17 @@
+---
+- name: install HAProxy
+  yum:
+    name: haproxy
+    state: installed
+
+- name: enable HAProxy
+  systemd:
+    name: haproxy
+    enabled: yes
+
+- name: create HAProxy settings
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify:
+    - restart haproxy
