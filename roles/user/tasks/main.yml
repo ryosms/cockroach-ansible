@@ -1,0 +1,13 @@
+---
+- name: Create group 'cockroach'
+  group:
+    name: cockroach
+    state: present
+
+- name: Create user 'cockroach'
+  user:
+    name: cockroach
+    state: present
+    group: cockroach
+    home: /opt/cockroach
+    system: yes
