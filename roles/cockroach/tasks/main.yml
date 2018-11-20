@@ -1,4 +1,20 @@
 ---
+- name: check installed cockroach
+  stat:
+    path: /usr/local/bin/cockroach
+  register: installed_binary
+
+- name: check downloaded cockroach
+  stat:
+    path: "/opt/cockroach/{{ cockroach_package_name }}/cockroach"
+  register: downloaded_binary
+
+- name: check to need installing
+  set_fact:
+    need_install: |
+        not installed_binary.stat.exists or not downloaded_binary.stat.exists
+          or installed_binary.stat.checksum != downloaded_binary.stat.checksum
+
 - name: download and expand package
   unarchive:
     src: "{{ cockroach_download_site }}{{ cockroach_package_name }}.tgz"
@@ -6,10 +22,13 @@
     remote_src: yes
   become: yes
   become_user: cockroach
+  when: need_install
 
 - name: copy binary
   copy:
     src: "/opt/cockroach/{{ cockroach_package_name }}/cockroach"
     dest: /usr/local/bin/cockroach
+    mode: 755
     remote_src: yes
+  when: need_install
 
