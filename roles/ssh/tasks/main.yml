@@ -1,0 +1,27 @@
+---
+# Wow! config has multi lines 'PasswordAuthentication yes' in CloudGarage
+#- name: disable password authentication
+#  lineinfile:
+#    dest: /etc/ssh/sshd_config
+#    regexp: "^PasswordAuthentication"
+#    insertafter: "^#PasswordAuthentication"
+#    line: "PasswordAuthentication no"
+#  notify:
+#    - restart sshd
+
+- name: disable password authentication
+  replace:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication yes$"
+    replace: "PasswordAuthentication no"
+  notify:
+    - restart sshd
+
+- name: disable challenge response authentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^ChallengeResponseAuthentication"
+    insertafter: "^#ChallengeResponseAuthentication"
+    line: "ChallengeResponseAuthentication no"
+  notify:
+    - restart sshd

@@ -3,6 +3,7 @@
   vars_files:
     - vars/variables.yml
   roles:
+    - ssh
     - yum
     - user
     - cockroach
