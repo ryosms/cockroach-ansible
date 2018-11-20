@@ -1,0 +1,3 @@
+---
+cockroach_download_site: https://binaries.cockroachdb.com/
+cockroach_package_name: cockroach-v2.1.1.linux-amd64

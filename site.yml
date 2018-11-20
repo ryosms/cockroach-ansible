@@ -1,5 +1,8 @@
 ---
 - hosts: all
+  vars_files:
+    - vars/variables.yml
   roles:
     - yum
     - user
+    - cockroach
