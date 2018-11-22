@@ -3,4 +3,4 @@ cockroach_download_site: https://binaries.cockroachdb.com/
 cockroach_package_name: cockroach-v2.1.1.linux-amd64
 cockroach_db1_local_ip_addr: 192.168.x.x
 cockroach_db2_local_ip_addr: 192.168.x.x
-
+ssh_key_file: .ssh/cockroach.pem

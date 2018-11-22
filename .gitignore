@@ -133,3 +133,13 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# ssh key
+*.pem
+*.der
+*.crt
+*.cer
+*.key
+*.csr
+*.p12
+*.ppk
+id_rsa
