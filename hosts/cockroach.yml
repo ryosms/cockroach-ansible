@@ -2,19 +2,25 @@
 front:
   hosts:
     front1:
-      ansible_host: front.example.com
+      ansible_host: "{{ front1_settings.host_name }}"
       ansible_user: root
       ansible_ssh_private_key_file: "{{ ssh_key_file }}"
+      host_settings: "{{ front1_settings }}"
+
       # if you use healthchecks.io ( https://healthchecks.io ), add your ping-token below
       yum_update_healthchecksio_token:
 cockroach:
   hosts:
     db1:
-      ansible_host: db1.example.com
+      ansible_host: "{{ db1_settings.host_name }}"
+      host_settings: "{{ db1_settings }}"
+
       # if you use healthchecks.io ( https://healthchecks.io ), add your ping-token below
       yum_update_healthchecksio_token:
     db2:
-      ansible_host: db2.example.com
+      ansible_host: "{{ db2_settings.host_name }}"
+      host_settings: "{{ db2_settings }}"
+
       # if you use healthchecks.io ( https://healthchecks.io ), add your ping-token below
       yum_update_healthchecksio_token:
   vars:
