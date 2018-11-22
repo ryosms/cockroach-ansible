@@ -12,3 +12,13 @@ Install Cockroach DB using ansible
     - [Cockroach DB](https://www.cockroachlabs.com/)
 1. Database Server
     * Same as above
+
+## Using Docker
+
+This repository include `Dockerfile` and `docker-compose.yml`.
+Using command below, you can use the commands `cockroach` and `ansible-playbook`.
+
+```bash
+$ docker-compose up -d --build
+$ docker-compose exec cockroach
+```
