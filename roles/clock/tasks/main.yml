@@ -1,0 +1,19 @@
+---
+- name: disable timesyncd
+  command: timedatectl set-ntp no
+
+- name: install ntp
+  yum:
+    name: ntp
+    state: present
+
+- name: ntp setting
+  copy:
+    src: ntp.conf
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - restart ntpd
