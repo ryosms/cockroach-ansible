@@ -5,9 +5,8 @@
     state: latest
 
 - name: create cron
-  template:
-    src: update-yum.cron.j2
-    dest: /etc/cron.d/update-yum
-    owner: root
-    group: root
-    mode: 0644
+  cron:
+    name: update yum packages
+    minute: 25
+    hour: 1
+    job: yum update -y {% if yum_update_healthchecksio_token %}&& curl -fsS --retry 3 "https://hc-ping.com/{{ yum_update_healthchecksio_token }}" > /dev/null{% endif %}
