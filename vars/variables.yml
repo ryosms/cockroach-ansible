@@ -1,5 +1,3 @@
 ---
 cockroach_download_site: https://binaries.cockroachdb.com/
 cockroach_package_name: cockroach-v2.1.1.linux-amd64
-# if you use healthchecks.io ( https://healthchecks.io ), add your ping-token below
-yum_update_healthchecksio_token:
