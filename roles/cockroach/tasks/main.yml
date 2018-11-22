@@ -12,3 +12,4 @@
 
 - include: install.yml
 - include: certs.yml
+- include: service.yml

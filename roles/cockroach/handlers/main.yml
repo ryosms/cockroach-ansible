@@ -1,0 +1,5 @@
+---
+- name: restart cockroach
+  systemd:
+    name: securecockroachdb
+    state: restarted
