@@ -11,3 +11,4 @@
     - /var/lib/cockroach/.cockroach-certs
 
 - include: install.yml
+- include: certs.yml

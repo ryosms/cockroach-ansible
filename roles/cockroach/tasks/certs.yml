@@ -1,0 +1,63 @@
+---
+- name: check cert file
+  stat:
+    path: /var/lib/cockroach/certs/ca.crt
+  register: cert_file
+
+- name: check key file
+  stat:
+    path: /var/lib/cockroach/.cockroach-certs/ca.key
+  register: key_file
+
+- name: copy cert files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    force: yes
+    owner: cockroach
+    group: cockroach
+  with_items:
+    - {src: "ca.crt", dest: "/var/lib/cockroach/certs/ca.crt", mode: "0644"}
+    - {src: "ca.key", dest: "/var/lib/cockroach/.cockroach-certs/ca.key", mode: "0600"}
+  when: not cert_file.stat.exists or not key_file.stat.exists
+
+- name: check node key
+  stat:
+    path: /var/lib/cockroach/certs/node.key
+  register: node_key_file
+
+- name: create node certificates
+  command: |
+    /usr/local/bin/cockroach cert create-node \
+      "{{ host_settings.internal_ip }}" \
+      "{{ host_settings.external_ip }}" \
+      "{{ host_settings.host_name }}" \
+      localhost \
+      ${hostname} \
+      127.0.0.1 \
+      "{{ front1_settings.host_name }}" \
+      "{{ front1_settings.external_ip }}" \
+      --certs-dir=/var/lib/cockroach/certs \
+      --ca-key=/var/lib/cockroach/.cockroach-certs/ca.key
+  become: yes
+  become_user: cockroach
+  when: not node_key_file.stat.exists
+
+- name: check cllient key
+  stat:
+    path: /var/lib/cockroach/certs/client.root.key
+  register: client_root_key_file
+
+- name: upload client certificates
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    force: yes
+    owner: cockroach
+    group: cockroach
+  with_items:
+    - {src: "ca.crt", dest: "/var/lib/cockroach/certs/client.root.crt", mode: "0644"}
+    - {src: "ca.key", dest: "/var/lib/cockroach/certs/client.root.key", mode: "0600"}
+  when: not client_root_key_file.stat.exists
