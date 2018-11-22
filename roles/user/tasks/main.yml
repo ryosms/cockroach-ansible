@@ -9,5 +9,5 @@
     name: cockroach
     state: present
     group: cockroach
-    home: /opt/cockroach
+    home: /var/lib/cockroach
     system: yes
