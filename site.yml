@@ -5,6 +5,7 @@
   roles:
     - ssh
     - yum
+    - clock
     - haproxy
 - hosts: cockroach
   vars_files:
@@ -12,5 +13,6 @@
   roles:
     - ssh
     - yum
+    - clock
     - user
     - cockroach
