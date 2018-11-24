@@ -1,12 +1,4 @@
 ---
-- hosts: front
-  vars_files:
-    - vars/variables.yml
-  roles:
-    - ssh
-    - yum
-    - clock
-    - haproxy
 - hosts: cockroach
   vars_files:
     - vars/variables.yml
@@ -16,3 +8,11 @@
     - clock
     - user
     - cockroach
+- hosts: front
+  vars_files:
+    - vars/variables.yml
+  roles:
+    - ssh
+    - yum
+    - clock
+    - haproxy
