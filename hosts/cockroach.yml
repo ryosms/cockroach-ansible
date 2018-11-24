@@ -6,9 +6,11 @@ front:
       ansible_user: root
       ansible_ssh_private_key_file: "{{ ssh_key_file }}"
       host_settings: "{{ front1_settings }}"
+      letsencrypt_email: your-email@example.com
 
       # if you use healthchecks.io ( https://healthchecks.io ), add your ping-token below
       yum_update_healthchecksio_token:
+      letsencrypt_update_healthchecksio_token:
 cockroach:
   hosts:
     db1:

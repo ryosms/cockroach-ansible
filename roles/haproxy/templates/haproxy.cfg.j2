@@ -11,6 +11,7 @@ defaults
     # TCP keep-alive on client side. Server already enables them.
     option              clitcpka
 
+{% if initialized %}
 listen psql
     bind :26257
     mode tcp
@@ -18,3 +19,36 @@ listen psql
     option httpchk GET /health?ready=1
     server cockroach1 {{ db1_settings.internal_ip }}:26257 check port 8080
     server cockroach2 {{ db2_settings.internal_ip }}:26257 check port 8080
+
+frontend cockroach-web
+    mode http
+    bind *:80
+    bind *:443 ssl crt /etc/ssl/{{ host_settings.host_name }}/{{ host_settings.host_name }}.pem
+
+    # force ssl
+    redirect scheme https code 301 if !{ ssl_fc }
+
+    # Let's Encrypt test url
+    acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+    use_backend letsencrypt-backend if letsencrypt-acl
+
+    default_backend cockroach-admin-ui
+
+backend cockroach-admin-ui
+    mode http
+    server cockroach {{ db1.settings.internal_ip }}:8080 ssl verify none
+
+{% else %}
+frontend cockroach-web
+    mode http
+    bind *:80
+
+    # Let's Encrypt test url
+    acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+    use_backend letsencrypt-backend if letsencrypt-acl
+
+{%  endif %}
+
+backend letsencrypt-backend
+    mode http
+    server letsencrypt 127.0.0.1:8888
