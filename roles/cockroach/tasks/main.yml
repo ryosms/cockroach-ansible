@@ -13,3 +13,11 @@
 - include: install.yml
 - include: certs.yml
 - include: service.yml
+
+- name: initialize cockroach cluster
+  command: |
+      /usr/local/bin/cockroach init \
+        --certs-dir=/var/lib/cockroach/certs \
+        --host=localhost
+  become: yes
+  become_user: cockroach
