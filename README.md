@@ -35,6 +35,26 @@ $ cockroach cert create-client \
     --ca-key=roles/cockroach/files/ca.key
 ```
 
+### check client certificate
+
+check subject CN is `root`
+
+```bash
+$ openssl x509 -text -noout -in roles/cockroach/files/client.root.crt
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            1a:2b:3c:4d:5e:6f:th:is:is:ex:am:pl:e1:0f:fd:aa
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: O=Cockroach, CN=Cockroach CA
+        Validity
+            Not Before: Nov 21 07:14:02 2018 GMT
+            Not After : Nov 29 07:14:02 2028 GMT
+        Subject: O=Cockroach, CN=root
+        Subject Public Key Info:
+(snip)
+```
 
 ## Using Docker
 
